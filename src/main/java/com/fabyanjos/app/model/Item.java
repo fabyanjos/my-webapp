@@ -1,7 +1,14 @@
 package com.fabyanjos.app.model;
 
-public class Item {
+import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class Item implements Serializable {
+
+	@Id
 	private Long id;
 	private String name;
 	private Double value;

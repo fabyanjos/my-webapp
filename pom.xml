@@ -57,6 +57,21 @@
  		<artifactId>hibernate-entitymanager</artifactId>
  		<version>4.1.8.Final</version>
  	</dependency>
+ 	<dependency>
+ 		<groupId>com.sun.jersey</groupId>
+ 		<artifactId>jersey-json</artifactId>
+ 		<version>1.15</version>
+ 	</dependency>
+ 	<dependency>
+ 		<groupId>cglib</groupId>
+ 		<artifactId>cglib</artifactId>
+ 		<version>2.2.2</version>
+ 	</dependency>
+ 	<dependency>
+ 		<groupId>com.sun.jersey</groupId>
+ 		<artifactId>jersey-spring</artifactId>
+ 		<version>1.0</version>
+ 	</dependency>
 	</dependencies>
   <build>
     <finalName>my-webapp</finalName>
