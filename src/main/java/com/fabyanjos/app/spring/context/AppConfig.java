@@ -8,10 +8,11 @@ import org.springframework.context.annotation.Import;
 import org.springframework.core.io.ClassPathResource;
 
 import com.fabyanjos.app.spring.RepositoryConfig;
+import com.fabyanjos.app.spring.WebConfig;
 
 @Configuration
 @ComponentScan(value = "com.fabyanjos.app", excludeFilters = @ComponentScan.Filter(Configuration.class))
-@Import({ RepositoryConfig.class })
+@Import({ RepositoryConfig.class, WebConfig.class })
 public class AppConfig {
 
 	@Bean

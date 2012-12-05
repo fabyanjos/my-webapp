@@ -2,26 +2,22 @@ package com.fabyanjos.app.rest;
 
 import java.util.List;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fabyanjos.app.model.Item;
 import com.fabyanjos.app.service.ItemService;
 
-@Path("/helloworld")
+@Controller
 public class TestResource {
 	
 	@Autowired 
 	ItemService itemService;
 
-	// The Java method will process HTTP GET requests
-	@GET
-	// The Java method will produce content identified by the MIME Media
-	// type "text/plain"
-	@Produces("text/plain")
+	@RequestMapping(value="/rest/helloworld", produces={"text/plain"})
+	@ResponseBody
 	public String getMsg() {
         List<Item> allItem = itemService.getAllItens();
         for (Item u : allItem)
@@ -37,6 +33,6 @@ public class TestResource {
             System.out.println(u);
         }
 		// Return some cliched textual content
-		return "Hello World Jersey";
+		return "Hello World Rest";
 	}
 }
