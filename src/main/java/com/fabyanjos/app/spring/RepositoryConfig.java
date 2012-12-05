@@ -5,15 +5,24 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.metamodel.MetadataSources;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.ServiceRegistryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
+@EnableTransactionManagement
 public class RepositoryConfig {
 
 	// ${jdbc.driverClassName}
@@ -26,7 +35,7 @@ public class RepositoryConfig {
 	@Value("${hibernate.hbm2ddl.auto}") private String hibernateHbm2ddlAuto;
 
 	@Bean()
-	public DataSource getDataSource() {
+	public DataSource dataSource() {
 		DriverManagerDataSource ds = new DriverManagerDataSource();
 		ds.setDriverClassName(driverClassName);
 		ds.setUrl(url);
@@ -36,24 +45,21 @@ public class RepositoryConfig {
 	}
 
 	@Bean
-	@Autowired
-	public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
-		HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-		transactionManager.setSessionFactory(sessionFactory);
-		return transactionManager;
+	public PlatformTransactionManager transactionManager() {
+		return new HibernateTransactionManager(sessionFactory().getObject());
 	}
 
 	@Bean
-	public LocalSessionFactoryBean getSessionFactory() {
+	public LocalSessionFactoryBean sessionFactory() {
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-		sessionFactory.setDataSource(getDataSource());
-		sessionFactory.setHibernateProperties(getHibernateProperties());
+		sessionFactory.setDataSource(dataSource());
+		sessionFactory.setHibernateProperties(hibernateProperties());
 		sessionFactory.setPackagesToScan(new String[] { "com.fabyanjos.app" });
 		return sessionFactory;
 	}
 
 	@Bean
-	public Properties getHibernateProperties() {
+	public Properties hibernateProperties() {
 		Properties properties = new Properties();
 		properties.put("hibernate.dialect", hibernateDialect);
 		properties.put("hibernate.show_sql", hibernateShowSql);

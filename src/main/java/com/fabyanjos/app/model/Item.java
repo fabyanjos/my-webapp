@@ -19,7 +19,10 @@ public class Item implements Serializable {
 	private Long qty;
 	private Double realValue;
 
-	public Item(Integer id, String name, Double value) {
+    public Item() {
+    }
+
+    public Item(Integer id, String name, Double value) {
 		this.id = id;
 		this.name = name;
 		this.value = value;

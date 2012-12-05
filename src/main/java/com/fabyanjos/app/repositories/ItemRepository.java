@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fabyanjos.app.model.Item;
 
 @Repository
-@Transactional
+
 public class ItemRepository {
 
 	@Autowired
@@ -18,12 +18,13 @@ public class ItemRepository {
 
 	@SuppressWarnings("unchecked")
 	public List<Item> getAllItens() {
-		return this.factory.getCurrentSession().createCriteria(Item.class).list();
+		return this.factory.openSession().createCriteria(Item.class).list();
 	}
 
+    @Transactional
 	public Integer createItem(Item item) {
-		Item mergeItem = (Item) this.factory.getCurrentSession().save(item);
-		return mergeItem.getId();
+		this.factory.getCurrentSession().save(item);
+		return item.getId();
 	}
 
 }
