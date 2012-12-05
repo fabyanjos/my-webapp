@@ -1,28 +1,20 @@
-package com.fabyanjos.app.rest;
+package com.fabyanjos.test;
 
 import java.util.List;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.fabyanjos.app.model.Item;
 import com.fabyanjos.app.service.ItemService;
 
-@Path("/helloworld")
-public class TestResource {
-	
-	@Autowired 
-	ItemService itemService;
+public class ContainerTest {
 
-	// The Java method will process HTTP GET requests
-	@GET
-	// The Java method will produce content identified by the MIME Media
-	// type "text/plain"
-	@Produces("text/plain")
-	public String getMsg() {
+	public static void main(String[] args) {
+        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
+        ctx.scan("com.fabyanjos.app.spring.context");//This will load the configured components ItemService, ItemRepository,
+        ctx.refresh();
+        System.out.println(ctx);
+        ItemService itemService = ctx.getBean(ItemService.class);
         List<Item> allItem = itemService.getAllItens();
         for (Item u : allItem)
         {
@@ -36,7 +28,5 @@ public class TestResource {
         {
             System.out.println(u);
         }
-		// Return some cliched textual content
-		return "Hello World Jersey";
-	}
+    }
 }
