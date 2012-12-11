@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fabyanjos.app.model.Item;
 
 @Repository
-
 public class ItemRepository {
 
 	@Autowired

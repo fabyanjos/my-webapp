@@ -13,7 +13,7 @@ import com.fabyanjos.app.spring.WebConfig;
 @Configuration
 @ComponentScan(value = "com.fabyanjos.app", excludeFilters = @ComponentScan.Filter(Configuration.class))
 @Import({ RepositoryConfig.class, WebConfig.class })
-public class AppConfig {
+public class SpringConfig {
 
 	@Bean
 	public PropertyPlaceholderConfigurer getPropertyPlaceholderConfigurer() {
